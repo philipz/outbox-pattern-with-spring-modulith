@@ -4,7 +4,9 @@ This project is a demonstration of Outbox pattern with Spring Modulith library u
 
 Read the accompanying blog post here: <INSERT BLOG LINK>
 
-<img height="60%" src="/Users/abhinavsonkar/IdeaProjects/github/outbox-demo/outbox-pattern-with-spring-modulith.png" title="Application architecture of Outbox Pattern with Spring Modulith" width="60%"/>
+## Application Architecture
+
+<img height="60%" src="outbox-pattern-with-spring-modulith.png" title="Application architecture of Outbox Pattern with Spring Modulith" width="60%"/>
 
 ## Project Requirements
 
