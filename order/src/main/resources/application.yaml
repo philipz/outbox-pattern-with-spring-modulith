@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: order
+  jpa:
+    open-in-view: false
+    show-sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      properties:
+        spring.json.add.type.headers: "false"
+
+order:
+  order-created-kafka-topic: "order-created"
+
+logging:
+  level:
+    org.springframework.modulith: DEBUG
+    org.springframework.orm.jpa: DEBUG

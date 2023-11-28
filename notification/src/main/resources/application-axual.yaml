@@ -1,0 +1,19 @@
+spring:
+  kafka:
+    bootstrap-servers: bootstrap-sharedkafka.byok.p.westeurope.azure.axual.cloud:9095
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        sasl:
+          mechanism: SCRAM-SHA-512
+          jaas:
+            config: org.apache.kafka.common.security.scram.ScramLoginModule required username="<USERNAME>" password="<PASSWORD>";
+        spring.json.use.type.headers: "false"
+        spring.json.value.default.type: "example.OrderCreated"
+    properties:
+      security:
+        protocol: SASL_SSL
+
+notification:
+  order-created-kafka-topic: "<TOPIC-NAME>"
+  group-id: "<GROUP-ID>"

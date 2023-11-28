@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: notification
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.use.type.headers: "false"
+        spring.json.value.default.type: "example.OrderCreated"
+
+notification:
+  order-created-kafka-topic: "order-created"
+  group-id: "notification"

@@ -1,0 +1,16 @@
+spring:
+  kafka:
+    bootstrap-servers: bootstrap-sharedkafka.byok.p.westeurope.azure.axual.cloud:9095
+    producer:
+      properties:
+        sasl:
+          mechanism: SCRAM-SHA-512
+          jaas:
+            config: org.apache.kafka.common.security.scram.ScramLoginModule required username="<USERNAME>" password="<PASSWORD>";
+        spring.json.add.type.headers: "false"
+    properties:
+      security:
+        protocol: SASL_SSL
+
+order:
+  order-created-kafka-topic: "<TOPIC-NAME>"
