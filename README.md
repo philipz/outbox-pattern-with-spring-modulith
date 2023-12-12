@@ -10,9 +10,9 @@ Read the accompanying blog post here: <INSERT BLOG LINK>
 
 ## Project Requirements
 
-* JDK 21
-* Spring Boot 3.2
-* Docker (to run locally)
+- JDK 21
+- Spring Boot 3.2
+- Docker (to run locally)
 
 ## Prepare the application
 
@@ -40,43 +40,47 @@ To run the application with a Kafka cluster from Axual, follow below steps:
 
 1. Open the file `order/src/main/resources/application-axual.yaml` and update the SASL username and password from Axual (read the accompanying blog to understand how to obtain the credentials). Repeat the steps for the file `notification/src/main/resources/application-axual.yaml`.
 
-    ```yaml
-    spring:
-      kafka:
-        producer:
-          properties:
-            sasl:
-              mechanism: SCRAM-SHA-512
-              jaas:
-                config: org.apache.kafka.common.security.scram.ScramLoginModule required username="<USERNAME>" password="<PASSWORD>";
-    ```
+   ```yaml
+   spring:
+     kafka:
+       producer:
+         properties:
+           sasl:
+             mechanism: SCRAM-SHA-512
+             jaas:
+               config: org.apache.kafka.common.security.scram.ScramLoginModule required username="<USERNAME>" password="<PASSWORD>";
+   ```
 
 2. Run below command to start the Order monolith with `axual` Spring profile:
-    ```bash
-    cd order
-    mvn spring-boot:run -Dspring-boot.run.profiles=axual
-    ```
+
+   ```bash
+   cd order
+   mvn spring-boot:run -Dspring-boot.run.profiles=axual
+   ```
 
 3. Repeat the steps for Notification service and run below command to start the Notification service with `axual` Spring profile:
-    ```bash
-    cd notification
-    mvn spring-boot:run -Dspring-boot.run.profiles=axual
-    ```
+
+   ```bash
+   cd notification
+   mvn spring-boot:run -Dspring-boot.run.profiles=axual
+   ```
 
 4. Trigger the order creation flow with below command:
-    ```bash
-    curl -X POST http://localhost:8080/orders -d "product=Coffee"
-    ```
+   ```bash
+   curl -X POST http://localhost:8080/orders -d "product=Coffee"
+   ```
+
 ## View Traces
 
-Open Zipkin in browser at http://localhost:9411 and view the trace.  
+Open Zipkin in browser at http://localhost:9411 and view the trace.
 
 <img height="80%" width="80%" src="images/zipkin-tracing-sample.png" title="Application architecture of Outbox Pattern with Spring Modulith"/>
 
 ## Logs sample
 
 Inspect the logs to see how transactions are created and committed, Shipping module kicks into action via the published event within the JVM and Notification is triggered via the published event in Kafka.
-```
+
+```text
 2023-11-28T22:28:07.484Z DEBUG 1 --- [order] [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Creating new transaction with name [example.order.OrderManagement.create]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
 2023-11-28T22:28:07.485Z DEBUG 1 --- [order] [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Opened new EntityManager [SessionImpl(1079008876<open>)] for JPA transaction
 2023-11-28T22:28:07.489Z DEBUG 1 --- [order] [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Exposing JPA transaction as JDBC [org.springframework.orm.jpa.vendor.HibernateJpaDialect$HibernateConnectionHandle@726397f3]

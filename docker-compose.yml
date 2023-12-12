@@ -1,10 +1,10 @@
 ---
-version: '3.8'
+version: "3.8"
 services:
   kafka:
-    image: 'docker.io/bitnami/kafka:3.6.0'
+    image: "docker.io/bitnami/kafka:3.6.0"
     ports:
-      - '9094:9094'
+      - "9094:9094"
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -36,11 +36,11 @@ services:
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
 
   order-monolith:
-    image: 'order:0.0.1-SNAPSHOT'
+    image: "order:0.0.1-SNAPSHOT"
     depends_on:
       - kafka
     ports:
-      - '8080:8080'
+      - "8080:8080"
     environment:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - OTEL_JAVAAGENT_ENABLED=true
@@ -50,7 +50,7 @@ services:
       - OTEL_SERVICE_NAME=order
 
   notification-service:
-    image: 'notification:0.0.1-SNAPSHOT'
+    image: "notification:0.0.1-SNAPSHOT"
     depends_on:
       - kafka
     environment:
@@ -64,4 +64,4 @@ services:
   zipkin:
     image: openzipkin/zipkin-slim:latest
     ports:
-      - '9411:9411'
+      - "9411:9411"
