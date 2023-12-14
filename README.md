@@ -2,7 +2,7 @@
 
 This project is a demonstration of Outbox pattern with Spring Modulith library using Event Externalization.
 
-Read the accompanying blog post here: <INSERT BLOG LINK>
+Read the accompanying blog post here: https://axual.com/implementing-outbox-pattern-with-apache-kafka-and-spring-modulith/
 
 ## Application Architecture
 
