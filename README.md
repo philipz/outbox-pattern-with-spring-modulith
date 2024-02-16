@@ -12,7 +12,7 @@ Read the accompanying blog post here: https://axual.com/implementing-outbox-patt
 
 - JDK 21
 - Spring Boot 3.2
-- Docker (to run locally)
+- Docker Desktop 4.26.1 version and below (to run locally)
 
 ## Prepare the application
 
