@@ -65,3 +65,12 @@ services:
     image: openzipkin/zipkin-slim:latest
     ports:
       - "9411:9411"
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - 9100:9000
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+    depends_on:
+      - kafka
