@@ -4,11 +4,22 @@ spring:
   jpa:
     open-in-view: false
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        hbm2ddl:
+         auto: update
   kafka:
     bootstrap-servers: localhost:9092
     producer:
       properties:
         spring.json.add.type.headers: "false"
+## PostgreSQL
+  datasource:
+    url: jdbc:tc:postgresql:16.1:///outbox-demo
+    #jdbc:postgresql://localhost:5432/outbox-demo
+    username: outbox-demo
+    password: ''
 
 order:
   order-created-kafka-topic: "order-created"
@@ -17,3 +28,4 @@ logging:
   level:
     org.springframework.modulith: DEBUG
     org.springframework.orm.jpa: DEBUG
+

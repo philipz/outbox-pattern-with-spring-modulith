@@ -35,14 +35,27 @@ services:
       - KAFKA_CFG_TRANSACTION_STATE_LOG_NUM_PARTITIONS=16
       - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1
 
+  postgresql:
+    image: postgres:16.1
+    # volumes:
+    #   - ~/volumes/outbox-demo/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=outbox-demo
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+
   order-monolith:
     image: "order:0.0.1-SNAPSHOT"
     depends_on:
       - kafka
+      - postgresql
     ports:
       - "8080:8080"
     environment:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/outbox-demo
       - OTEL_JAVAAGENT_ENABLED=true
       - OTEL_TRACES_EXPORTER=zipkin
       - OTEL_EXPORTER_ZIPKIN_ENDPOINT=http://zipkin:9411/api/v2/spans

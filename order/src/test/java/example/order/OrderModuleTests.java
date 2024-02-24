@@ -3,10 +3,15 @@ package example.order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.modulith.test.Scenario;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,6 +24,16 @@ import static org.mockito.Mockito.when;
 @Slf4j
 @ApplicationModuleTest
 class OrderModuleTests {
+
+    @Container
+    @ServiceConnection
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer("postgres:16.1");
+
+	@DynamicPropertySource
+    static void postgresProperties(DynamicPropertyRegistry registry) {
+        //registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        postgres.start();
+    }
 
     @MockBean
     KafkaOperations<?, ?> kafkaOperations;
