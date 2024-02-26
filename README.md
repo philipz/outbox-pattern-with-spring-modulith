@@ -67,7 +67,10 @@ To run the application with a Kafka cluster from Axual, follow below steps:
 
 4. Trigger the order creation flow with below command:
    ```bash
-   curl -X POST http://localhost:8080/orders -d "product=Coffee"
+   curl -X POST http://localhost:8080/orders --header 'Content-Type: text/plain' -d "Coffee"
+   ```
+   ```bash
+   curl -X PUT http://localhost:8080/orders/1 --header 'Content-Type: text/plain' -d "Late"
    ```
 
 ## View Traces

@@ -17,6 +17,6 @@ public class NotificationApplication {
 
     @KafkaListener(topics = "#{'${notification.order-created-kafka-topic}'}", groupId = "#{'${notification.group-id}'}")
     public void notify(OrderCreated event) {
-        log.info("Notifying user for created order {} and product {}", event.id(), event.product());
+        log.info("Notifying user for {} order {} and product {}", event.status(), event.id(), event.product());
     }
 }

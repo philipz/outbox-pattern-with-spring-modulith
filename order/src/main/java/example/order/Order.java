@@ -8,10 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
@@ -31,6 +33,6 @@ public class Order {
     }
 
     public enum OrderStatus {
-        CREATED, COMPLETED
+        CREATED, UPDATE, COMPLETED
     }
 }

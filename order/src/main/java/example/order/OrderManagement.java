@@ -4,6 +4,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import example.order.Order.OrderStatus;
+
 import java.util.List;
 
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
@@ -24,10 +26,32 @@ public class OrderManagement {
     public Order create(@SpanAttribute("product") String product) {
         var order = orders.save(new Order(product));
 
-        events.publishEvent(new OrderCreated(order.getId(), order.getProduct()));
+        events.publishEvent(new OrderCreated(order.getId(), order.getProduct(), order.getStatus()));
 
         log.info("Order created");
 
+        return order;
+    }
+
+    @WithSpan("update-order")
+    public Order update(Long id, @SpanAttribute("product") String product) {
+        @SuppressWarnings("null")
+        var order = orders.findById(id).get();
+        order.setProduct(product);
+        order.setStatus(OrderStatus.UPDATE);
+        orders.save(order);
+
+        events.publishEvent(new OrderCreated(order.getId(), order.getProduct(), order.getStatus()));
+
+        log.info("Order updated");
+
+        return order;
+    }
+
+    @WithSpan("get-order")
+    public Order findById(Long id) {
+        @SuppressWarnings("null")
+        var order = orders.findById(id).get();
         return order;
     }
 
