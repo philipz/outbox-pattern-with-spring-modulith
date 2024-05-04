@@ -29,3 +29,6 @@ logging:
     org.springframework.modulith: DEBUG
     org.springframework.orm.jpa: DEBUG
 
+camunda.bpm.admin-user:
+  id: demo
+  password: demo
